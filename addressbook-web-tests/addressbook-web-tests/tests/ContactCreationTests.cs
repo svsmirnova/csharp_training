@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     public class ContactCreationTests : TestBase
     {
         [Test]
-        public void TheUntitledTestCaseTest()
+        public void ContactCreationTest()
         {
             app.Contacts.InitContactCreation();
             ContactData contact = new ContactData("testFirstName", "testLastName", "testEmail");
@@ -18,6 +18,7 @@ namespace WebAddressbookTests
             contact.Company = "testCompany";
             contact.Company = "testAddress";
             app.Contacts.FillContactData(contact);
+            app.Contacts.SubmitContactCreation();
             app.Navigator.ReturnToHomePage();
         }
     }

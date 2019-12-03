@@ -14,6 +14,55 @@ namespace WebAddressbookTests
     {
         public ContactHelper(ApplicationManager manager) : base(manager)
         {}
+
+        public ContactHelper Remove(int v)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(v);
+            RemoveContact();
+            return this;
+        }
+
+        public ContactHelper Modify(int v, ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(v);
+            InitContactModification();
+            FillContactData(contact);
+            SubmitContactModification();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.XPath("//input[@value='Update']")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactCreation()
+        {
+            driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
         public void InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
@@ -34,7 +83,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("email")).Click();
             driver.FindElement(By.Name("email")).Clear();
             driver.FindElement(By.Name("email")).SendKeys(contact.Email);
-            driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
         }
     }
 }
