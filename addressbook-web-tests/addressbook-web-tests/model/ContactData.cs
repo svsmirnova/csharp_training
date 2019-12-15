@@ -60,7 +60,7 @@ namespace WebAddressbookTests
             this.email = email;
         }
 
-        public string FirstName
+        public string FirstName 
         {
             get { return firstName; }
             set { firstName = value; }
@@ -91,6 +91,8 @@ namespace WebAddressbookTests
             get { return email; }
             set { email = value; }
         }
+
+        public string Id { get; set; }
 
     }
 }
