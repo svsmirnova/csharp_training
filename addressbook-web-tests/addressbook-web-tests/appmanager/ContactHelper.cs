@@ -24,7 +24,20 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal ContactHelper Create(ContactData contact)
+        internal List<ContactData> GetContactsList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                var cells = element.FindElements(By.XPath("./td"));
+                contacts.Add(new ContactData(cells[2].Text, cells[1].Text, cells[4].Text));
+            }
+            return contacts;
+        }
+
+        internal ContactHelper Create(ContactData contact)  
         {
             manager.Navigator.GoToHomePage();
             InitContactCreation();
