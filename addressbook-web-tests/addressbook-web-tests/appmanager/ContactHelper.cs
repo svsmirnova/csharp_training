@@ -44,12 +44,20 @@ namespace WebAddressbookTests
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
 
+            string Email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string Email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string Email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
             return new ContactData(firstName, lastName)
             {
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
-                WorkPhone = workPhone
+                WorkPhone = workPhone,
+
+                Email = Email,
+                Email2 = Email2,
+                Email3 = Email3
             };
         }
 
@@ -58,6 +66,24 @@ namespace WebAddressbookTests
             driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"))[7]
                 .FindElement(By.TagName("a")).Click();
+        }
+
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactDetails(index);
+            IList<IWebElement> items = driver.FindElements(By.Id("content"));
+            return new ContactData("","")
+            {
+                Details = items[0].Text
+            };
+        }
+
+        private void InitContactDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+              .FindElements(By.TagName("td"))[6]
+              .FindElement(By.TagName("a")).Click();
         }
 
         public ContactHelper Remove()
