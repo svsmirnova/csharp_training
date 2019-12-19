@@ -28,12 +28,26 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
+            if (!(IsElementPresent(By.Name("selected[]"))))
+            {
+                GroupData group = new GroupData("testName")
+                {
+                    Header = "testHeader",
+                    Footer = "testFooter"
+                };
+                Create(group);                
+            }
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
             manager.Navigator.GoToGroupPage();
             return this;
+        }
+        public GroupHelper SelectGroup(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+                return this;
         }
 
         public GroupHelper SubmitGroupModification()
@@ -51,6 +65,15 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupPage();
+            if (!(IsElementPresent(By.Name("selected[]"))))
+            {
+                GroupData group = new GroupData("testName")
+                {
+                    Header = "testHeader",
+                    Footer = "testFooter"
+                };
+                Create(group);
+            }
             SelectGroup(v);
             RemoveGroup();
             manager.Navigator.GoToHomePage();
@@ -71,23 +94,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
             return this;
         }
-        public GroupHelper SelectGroup(int index)
-        {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-                return this;
-            }
-            else
-            {
-                GroupData group = new GroupData("testName");
-                group.Header = "testHeader";
-                group.Footer = "testFooter";
-                Create(group);
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-                return this;
-            }
-        }
+        
         public GroupHelper FillGroupForm(GroupData group)
         {
             Type(By.Name("group_name"), group.Name);

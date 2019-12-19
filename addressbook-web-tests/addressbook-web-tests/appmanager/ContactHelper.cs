@@ -18,6 +18,16 @@ namespace WebAddressbookTests
         public ContactHelper Remove()
         {
             manager.Navigator.GoToHomePage();
+            if (!(IsElementPresent(By.Name("selected[]"))))
+            {
+                ContactData newContact = new ContactData("testFirstName", "testLastName", "testEmail")
+                {
+                    NickName = "testNickname",
+                    Company = "testCompany",
+                    Address = "testAddress"
+                };
+                Create(newContact);
+            }
             SelectContact();
             RemoveContact();
             manager.Navigator.GoToHomePage();
@@ -37,6 +47,16 @@ namespace WebAddressbookTests
         public ContactHelper Modify(int v, ContactData contact)
         {
             manager.Navigator.GoToHomePage();
+            if (!(IsElementPresent(By.Name("selected[]"))))
+            {
+                ContactData newContact = new ContactData("testFirstName", "testLastName", "testEmail")
+                {
+                    NickName = "testNickname",
+                    Company = "testCompany",
+                    Address = "testAddress"
+                };
+                Create(newContact);
+            }
             SelectContact();
             InitContactModification();
             FillContactData(contact);
@@ -71,24 +91,8 @@ namespace WebAddressbookTests
         }
         public ContactHelper SelectContact()
         {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
                 return this;
-            }
-            else
-            {
-                ContactData contact = new ContactData("testFirstName", "testLastName", "testEmail")
-                {
-                    NickName = "testNickname",
-                    Company = "testCompany",
-                    Address = "testAddress"
-                };
-                Create(contact);
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
-                return this;
-            }
-                
         }
         public ContactHelper InitContactCreation()
         {
