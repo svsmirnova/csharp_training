@@ -14,7 +14,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData contact = new ContactData("testFirstNameModified", "testLastNameModified", "testEmailModified");
+            ContactData contact = new ContactData("testFirstNameModified", "testLastNameModified");
             List<ContactData> oldContacts = app.Contacts.GetContactsList();
 
             ContactData oldContactData = oldContacts[0];

@@ -8,12 +8,7 @@ namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstName;
-        private string secondName;
-        private string nickName = "";
-        private string company = "";
-        private string address = "";
-        private string email;
+        private string allPhones;
 
         public bool Equals(ContactData other)
         {
@@ -53,46 +48,48 @@ namespace WebAddressbookTests
             return (SecondName).CompareTo(other.SecondName);
         }
 
-        public ContactData(string firstName, string secondName, string email)
+        public ContactData(string firstName, string secondName)
         {
-            this.firstName = firstName;
-            this.secondName = secondName;
-            this.email = email;
+            FirstName = firstName;
+            SecondName = secondName;
         }
 
-        public string FirstName 
-        {
-            get { return firstName; }
-            set { firstName = value; }
-        }
-
-        public string SecondName
-        {
-            get { return secondName; }
-            set { secondName = value; }
-        }
-        public string NickName
-        {
-            get { return nickName; }
-            set { nickName = value; }
-        }
-        public string Company
-        {
-            get { return company; }
-            set { company = value; }
-        }
-        public string Address
-        {
-            get { return address; }
-            set { address = value; }
-        }
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
-
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+        public string NickName { get; set; }
+        public string Company { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
         public string Id { get; set; }
+        public string HomePhone { get; set; }
+        public string MobilePhone { get; set; }
+        public string WorkPhone { get; set; }
+        public string AllPhones
+        {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
+            }
+            set
+            {
+                allPhones = value;
+            }
+        }
 
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return phone.Replace("", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+        }
     }
 }
