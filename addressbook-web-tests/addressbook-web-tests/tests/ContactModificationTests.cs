@@ -15,7 +15,21 @@ namespace WebAddressbookTests
         public void ContactModificationTest()
         {
             ContactData contact = new ContactData("testFirstNameModified", "testLastNameModified", "testEmailModified");
-            app.Contacts.Modify(1,contact);
+            if (app.Contacts.ContactCheckExistence())
+            {
+                app.Contacts.Modify(1, contact);
+            }
+            else
+            {
+                ContactData newContact = new ContactData("testFirstName", "testLastName", "testEmail")
+                {
+                    NickName = "testNickname",
+                    Company = "testCompany",
+                    Address = "testAddress"
+                };
+                app.Contacts.Create(newContact);
+                app.Contacts.Modify(1, contact);
+            }
         }
     }
 }

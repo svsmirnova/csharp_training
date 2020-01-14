@@ -45,6 +45,12 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool ContactCheckExistence()
+        {
+            manager.Navigator.GoToHomePage();
+            return (IsElementPresent(By.Name("selected[]")));
+        }
+
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("//input[@value='Update']")).Click();
@@ -71,24 +77,8 @@ namespace WebAddressbookTests
         }
         public ContactHelper SelectContact()
         {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
-                return this;
-            }
-            else
-            {
-                ContactData contact = new ContactData("testFirstName", "testLastName", "testEmail")
-                {
-                    NickName = "testNickname",
-                    Company = "testCompany",
-                    Address = "testAddress"
-                };
-                Create(contact);
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
-                return this;
-            }
-                
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[1]")).Click();
+            return this;
         }
         public ContactHelper InitContactCreation()
         {

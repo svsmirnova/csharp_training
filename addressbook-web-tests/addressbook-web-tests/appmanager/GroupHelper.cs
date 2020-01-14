@@ -36,6 +36,12 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool GroupCheckExistence()
+        {
+            manager.Navigator.GoToGroupPage();
+            return (IsElementPresent(By.Name("selected[]")));
+        }
+
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -73,20 +79,8 @@ namespace WebAddressbookTests
         }
         public GroupHelper SelectGroup(int index)
         {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-                return this;
-            }
-            else
-            {
-                GroupData group = new GroupData("testName");
-                group.Header = "testHeader";
-                group.Footer = "testFooter";
-                Create(group);
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-                return this;
-            }
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
         }
         public GroupHelper FillGroupForm(GroupData group)
         {
