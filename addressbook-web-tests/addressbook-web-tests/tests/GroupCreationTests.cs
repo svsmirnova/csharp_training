@@ -13,9 +13,11 @@ namespace WebAddressbookTests
         [Test]
         public void GroupCreationTest()
         {
-            GroupData group = new GroupData("testName");
-            group.Header = "testHeader";
-            group.Footer = "testFooter";
+            GroupData group = new GroupData("testName")
+            {
+                Header = "testHeader",
+                Footer = "testFooter"
+            };
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
             app.Groups.Create(group);
             List<GroupData> newGroups = app.Groups.GetGroupsList();
@@ -28,9 +30,11 @@ namespace WebAddressbookTests
         [Test]
         public void EmptyGroupCreationTest()
         {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
+            GroupData group = new GroupData("")
+            {
+                Header = "",
+                Footer = ""
+            };
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
             app.Groups.Create(group);
             List<GroupData> newGroups = app.Groups.GetGroupsList();
